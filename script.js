@@ -2,7 +2,9 @@ fetch('products.json').then((response) => {
   return response.json();
 }).then((json) => {
   const products = json;
-  intialize(products);
+  initialize(products);
+}).catch((error) => {
+  console.log(`Fetch error: ${error.message}`)
 })
 
 function initialize(products) {
@@ -11,5 +13,5 @@ function initialize(products) {
   const productContainer = document.querySelector('.product-container');
 
 
-  //
+  // 
 }
