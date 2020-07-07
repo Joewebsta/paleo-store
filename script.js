@@ -35,20 +35,15 @@ function initialize(products) {
   }
 
   function showProduct(objectURL, product) {
-    const section = document.createElement('section');
-    const heading = document.createElement('h2');
-    const para = document.createElement('p');
-    const image = document.createElement('img');
+    const headerText = product.name[0].toUpperCase() + product.name.slice(1);
+    
+    const productHTML = `
+    <section class="${product.type}">
+      <h2>${headerText}</h2>
+      <p>$${product.price.toFixed(2)}</p>
+      <img src="${objectURL}" alt="${product.name}">
+    </section>`
 
-    section.className = product.type;
-    heading.textContent = product.name[0].toUpperCase() + product.name.slice(1);
-    para.textContent = `$${product.price.toFixed(2)}`;
-    image.src = objectURL;
-    image.alt = product.name;
-
-    productContainer.append(section);
-    section.append(heading);
-    section.append(para);
-    section.append(image);
+    productContainer.innerHTML += productHTML;
   }
 }
