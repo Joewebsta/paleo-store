@@ -10,15 +10,58 @@ fetch('products.json').then(response => {
 function initialize(products) {
   const macroSelect = document.querySelector('#macro');
   const searchTerm = document.querySelector('#searchTerm');
+  const filterBtn = document.querySelector('button');
   const productContainer = document.querySelector('.product-container');
 
+  let lastMacro = macroSelect.value;
+  let lastSearch = '';
+  let macroGroup;
   let finalGroup;
-  // finalGroup = products; WHY EXACTLY DO I NEED TO DO THIS?
+
+  finalGroup = products;
   updateDisplay();
 
+  macroGroup = [];
+  finalGroup = [];
+
+  filterBtn.addEventListener('click', selectMacro);
+
+
+
+
+
+
+  function selectMacro(e) {
+    e.preventDefault();
+
+    lastMacro =  macroSelect.value;
+    lastSearch = searchTerm.value.trim();
+
+    if (macroSelect.value === 'All') {
+      macroGroup = products;
+      selectProducts();
+    } else {
+      let lowerCaseMacroSelect = macroSelect.value.toLowerCase();
+      macroGroup = products.filter(product => product.type === lowerCaseMacroSelect);  
+      selectProducts();
+    }
+  }
+
+  function selectProducts() {
+    console.log(macroGroup);
+
+    if(searchTerm.value.trim() === '') {
+      finalGroup = macroGroup;
+      updateDisplay();
+    }
+  } 
 
   function updateDisplay() {
-    products.forEach(product => {
+    while(productContainer.firstChild) {
+      productContainer.firstChild.remove();
+    }
+    
+    finalGroup.forEach(product => {
       fetchBlob(product);
     })
   }

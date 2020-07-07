@@ -3,24 +3,24 @@
     "name": "chicken",
     "price": 3.99,
     "image": "chicken.jpg",
-    "type": "protein"
+    "type": "proteins"
   },
   {
     "name": "beef",
     "price": 4.99,
     "image": "beef.jpg",
-    "type": "protein"
+    "type": "proteins"
   },
   {
     "name": "kale",
     "price": 1.99,
     "image": "kale.jpg",
-    "type": "carb"
+    "type": "carbs"
   },
   {
     "name": "almonds",
     "price": 5.99,
     "image": "almonds.jpg",
-    "type": "fat"
+    "type": "fats"
   }
 ]
