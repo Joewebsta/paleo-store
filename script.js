@@ -21,18 +21,15 @@ function initialize(products) {
   finalGroup = products;
   updateDisplay();
 
-  macroGroup = [];
-  finalGroup = [];
+  macroGroup = []; //necessary?
+  finalGroup = []; //necessary?
 
   filterBtn.addEventListener('click', selectMacro);
 
-
-
-
-
-
   function selectMacro(e) {
     e.preventDefault();
+
+    if ((lastMacro === macroSelect.value) && lastSearch === searchTerm.value.trim()) return;
 
     lastMacro =  macroSelect.value;
     lastSearch = searchTerm.value.trim();
@@ -48,10 +45,11 @@ function initialize(products) {
   }
 
   function selectProducts() {
-    console.log(macroGroup);
-
     if(searchTerm.value.trim() === '') {
       finalGroup = macroGroup;
+      updateDisplay();
+    } else {
+      finalGroup = macroGroup.filter(product => product.name === searchTerm.value.toLowerCase().trim());
       updateDisplay();
     }
   } 
