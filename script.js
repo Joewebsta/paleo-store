@@ -29,13 +29,13 @@ function initialize(products) {
       selectProducts(products);
     } else {
       let lowerCaseMacroSelect = macroSelect.value.toLowerCase();
-      macroGroup = products.filter(product => product.type === lowerCaseMacroSelect);  
+      macroGroup = products.filter(product => product.type === lowerCaseMacroSelect);
       selectProducts(macroGroup);
     }
   }
 
   function selectProducts(macroGroup) {
-    if(searchTerm.value.trim() === '') {
+    if (searchTerm.value.trim() === '') {
       updateDisplay(macroGroup);
     } else {
       finalGroup = macroGroup.filter(product => {
@@ -44,16 +44,17 @@ function initialize(products) {
       });
       updateDisplay(finalGroup);
     }
-  } 
+  }
 
   function updateDisplay(finalGroup) {
-    while(productContainer.firstChild) {
-      productContainer.firstChild.remove();
+    productContainer.textContent = "";
+
+    if (finalGroup.length) {
+      finalGroup.forEach(product => fetchBlob(product));
+    } else {
+      const message = `<p>No products found!</p>`;
+      productContainer.innerHTML = message;
     }
-    
-    finalGroup.forEach(product => {
-      fetchBlob(product);
-    })
   }
 
   function fetchBlob(product) {
@@ -69,7 +70,7 @@ function initialize(products) {
 
   function showProduct(objectURL, product) {
     const headerText = product.name[0].toUpperCase() + product.name.slice(1);
-    
+
     const productHTML = `
     <section class="${product.type}">
       <h2>${headerText}</h2>
