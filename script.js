@@ -21,9 +21,6 @@ function initialize(products) {
   finalGroup = products;
   updateDisplay();
 
-  macroGroup = []; //necessary?
-  finalGroup = []; //necessary?
-
   filterBtn.addEventListener('click', selectMacro);
 
   function selectMacro(e) {
@@ -49,7 +46,10 @@ function initialize(products) {
       finalGroup = macroGroup;
       updateDisplay();
     } else {
-      finalGroup = macroGroup.filter(product => product.name === searchTerm.value.toLowerCase().trim());
+      finalGroup = macroGroup.filter(product => {
+        const currentSearchTerm = searchTerm.value.toLowerCase().trim();
+        return product.name.indexOf(currentSearchTerm) !== -1;
+      });
       updateDisplay();
     }
   } 
