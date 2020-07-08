@@ -15,46 +15,38 @@ function initialize(products) {
 
   let lastMacro = macroSelect.value;
   let lastSearch = '';
-  let macroGroup;
-  let finalGroup;
+  updateDisplay(products);
 
-  finalGroup = products;
-  updateDisplay();
-
-  filterBtn.addEventListener('click', selectMacro);
-
-  function selectMacro(e) {
+  function selectMacro(e, products) {
     e.preventDefault();
 
-    if ((lastMacro === macroSelect.value) && lastSearch === searchTerm.value.trim()) return;
+    if ((lastMacro === macroSelect.value) && (lastSearch === searchTerm.value.trim())) return;
 
-    lastMacro =  macroSelect.value;
+    lastMacro = macroSelect.value;
     lastSearch = searchTerm.value.trim();
 
     if (macroSelect.value === 'All') {
-      macroGroup = products;
-      selectProducts();
+      selectProducts(products);
     } else {
       let lowerCaseMacroSelect = macroSelect.value.toLowerCase();
       macroGroup = products.filter(product => product.type === lowerCaseMacroSelect);  
-      selectProducts();
+      selectProducts(macroGroup);
     }
   }
 
-  function selectProducts() {
+  function selectProducts(macroGroup) {
     if(searchTerm.value.trim() === '') {
-      finalGroup = macroGroup;
-      updateDisplay();
+      updateDisplay(macroGroup);
     } else {
       finalGroup = macroGroup.filter(product => {
         const currentSearchTerm = searchTerm.value.toLowerCase().trim();
         return product.name.indexOf(currentSearchTerm) !== -1;
       });
-      updateDisplay();
+      updateDisplay(finalGroup);
     }
   } 
 
-  function updateDisplay() {
+  function updateDisplay(finalGroup) {
     while(productContainer.firstChild) {
       productContainer.firstChild.remove();
     }
@@ -87,4 +79,8 @@ function initialize(products) {
 
     productContainer.innerHTML += productHTML;
   }
+
+  filterBtn.addEventListener('click', (e) => {
+    selectMacro(e, products)
+  });
 }
